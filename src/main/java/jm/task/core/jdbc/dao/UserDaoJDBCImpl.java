@@ -13,10 +13,12 @@ import java.util.List;
 public class UserDaoJDBCImpl extends Util implements UserDao {
 
     Connection connection = getConnect();
+
     public UserDaoJDBCImpl() {
 
     }
 
+    @Override
     public void createUsersTable() {
         String sql = "CREATE TABLE `mydb`.`users` (\n" +
                 "  `id` INT NOT NULL AUTO_INCREMENT,\n" +
@@ -25,7 +27,7 @@ public class UserDaoJDBCImpl extends Util implements UserDao {
                 "  `age` TINYINT NULL,\n" +
                 "  PRIMARY KEY (`id`))";
         try (Connection connection = Util.getConnect();
-            PreparedStatement preparedStatement = connection.prepareStatement(sql)
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)
         ) {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -34,6 +36,7 @@ public class UserDaoJDBCImpl extends Util implements UserDao {
 
     }
 
+    @Override
     public void dropUsersTable() {
         String sql = "drop table users";
         try (Connection connection = Util.getConnect();
@@ -62,6 +65,7 @@ public class UserDaoJDBCImpl extends Util implements UserDao {
         }
     }
 
+    @Override
     public void removeUserById(long id) {
         String sql = "Delete From User id = ?";
         try (Connection connection = Util.getConnect();
@@ -75,6 +79,7 @@ public class UserDaoJDBCImpl extends Util implements UserDao {
 
     }
 
+    @Override
     public List<User> getAllUsers() {
         List<User> list = new ArrayList<>();
         String sql = "Select * From users";
@@ -98,6 +103,7 @@ public class UserDaoJDBCImpl extends Util implements UserDao {
         return list;
     }
 
+    @Override
     public void cleanUsersTable() {
         String sql = "TRUNCATE TABLE users";
         try (Connection connection = Util.getConnect();
