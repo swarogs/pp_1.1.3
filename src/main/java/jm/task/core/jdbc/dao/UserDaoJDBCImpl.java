@@ -9,10 +9,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class UserDaoJDBCImpl extends Util implements UserDao {
 
     Connection connection = getConnect();
+    Logger logger = Logger.getLogger("Логирование");
 
     public UserDaoJDBCImpl() {
 
@@ -30,6 +32,7 @@ public class UserDaoJDBCImpl extends Util implements UserDao {
              PreparedStatement preparedStatement = connection.prepareStatement(sql)
         ) {
             preparedStatement.executeUpdate();
+            logger.info("Таблица Создана");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -38,11 +41,12 @@ public class UserDaoJDBCImpl extends Util implements UserDao {
 
     @Override
     public void dropUsersTable() {
-        String sql = "drop table users";
+        String sql = "DROP TABLE IF EXISTS users";
         try (Connection connection = Util.getConnect();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)
         ) {
             preparedStatement.executeUpdate();
+            logger.info("Таблица удалена");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -58,7 +62,7 @@ public class UserDaoJDBCImpl extends Util implements UserDao {
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, lastName);
             preparedStatement.setByte(3, age);
-
+            logger.info("Пользователь сохранен");
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -67,12 +71,13 @@ public class UserDaoJDBCImpl extends Util implements UserDao {
 
     @Override
     public void removeUserById(long id) {
-        String sql = "Delete From User id = ?";
+        String sql = "Delete From users WHERE id = ?";
         try (Connection connection = Util.getConnect();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)
         ) {
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
+            logger.info("Пользователь удален");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -89,12 +94,10 @@ public class UserDaoJDBCImpl extends Util implements UserDao {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 long id = resultSet.getLong("id");
-                System.out.println(id);
                 String name = resultSet.getString("name");
                 String lastname = resultSet.getString("lastname");
                 byte age = resultSet.getByte("age");
                 User users = new User(id, name, lastname, age);
-                System.out.println(users.getId());
                 list.add(users);
             }
         } catch (SQLException e) {
@@ -110,6 +113,7 @@ public class UserDaoJDBCImpl extends Util implements UserDao {
              PreparedStatement preparedStatement = connection.prepareStatement(sql)
         ) {
             preparedStatement.executeUpdate();
+            logger.info("Таблица очищена");
         } catch (SQLException e) {
             e.printStackTrace();
         }
