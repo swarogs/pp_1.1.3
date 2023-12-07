@@ -11,10 +11,12 @@ import javax.persistence.criteria.CriteriaQuery;
 import java.util.List;
 
 public class UserDaoHibernateImpl implements UserDao {
-    private final SessionFactory sessionFactory = Util.getConnection();
+    private final SessionFactory sessionFactory;
     private static final String createUsersQuery = "CREATE TABLE IF NOT EXISTS users" +
             "(id BIGINT PRIMARY KEY AUTO_INCREMENT, name VARCHAR(255), lastname VARCHAR(255), age INT)";
     public UserDaoHibernateImpl() {
+        sessionFactory = new Util().getConnection();
+
     }
 
     @Override

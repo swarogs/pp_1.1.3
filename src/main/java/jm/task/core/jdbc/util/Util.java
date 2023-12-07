@@ -14,7 +14,7 @@ import java.util.Properties;
 
 public class Util {
     private static SessionFactory sessionFactory;
-    public static SessionFactory getConnection() {
+    public  SessionFactory getConnection() {
         if (sessionFactory == null) {
             try {
                 Configuration configuration = new Configuration();
