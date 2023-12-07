@@ -13,23 +13,26 @@ public class UserServiceImpl implements UserService {
     @Override
     public void createUsersTable() {
         userDaoJDBC.createUsersTable();
+        System.out.println("Таблица создана");
     }
 
     @Override
     public void dropUsersTable() {
         userDaoJDBC.dropUsersTable();
+        System.out.println("Таблица удалена");
     }
 
     @Override
     public void saveUser(String name, String lastName, byte age) throws SQLException {
         userDaoJDBC.saveUser(name, lastName, age);
+        System.out.println("User с именем – " + name + " добавлен в базу данных");
 
     }
 
     @Override
     public void removeUserById(long id) {
         userDaoJDBC.removeUserById(id);
-
+        System.out.println("User удален");
     }
 
     @Override
@@ -44,5 +47,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public void cleanUsersTable() {
         userDaoJDBC.cleanUsersTable();
+        System.out.println("Таблица очищена");
     }
 }
