@@ -16,7 +16,6 @@ public class UserDaoHibernateImpl implements UserDao {
             "(id BIGINT PRIMARY KEY AUTO_INCREMENT, name VARCHAR(255), lastname VARCHAR(255), age INT)";
     public UserDaoHibernateImpl() {
         sessionFactory = new Util().getConnection();
-
     }
 
     @Override
