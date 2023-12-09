@@ -11,18 +11,20 @@ import javax.persistence.criteria.CriteriaQuery;
 import java.util.List;
 
 public class UserDaoHibernateImpl implements UserDao {
+
     private final SessionFactory sessionFactory;
+
     private static final String createUsersQuery = "CREATE TABLE IF NOT EXISTS users" +
             "(id BIGINT PRIMARY KEY AUTO_INCREMENT, name VARCHAR(255), lastname VARCHAR(255), age INT)";
+
     public UserDaoHibernateImpl() {
         sessionFactory = new Util().getConnection();
     }
 
     @Override
-    public void createUsersTable() {
-        Session session = sessionFactory.openSession();
-        try (session) {
-            Transaction transaction = session.beginTransaction();
+    public void createUsersTable() {//todo: codeStyle ..во всех методах - именно так
+        try (Session session = sessionFactory.openSession();) {
+            Transaction transaction = session.beginTransaction();//todo: не использованная переменная Transaction transaction
             session.createNativeQuery(createUsersQuery).executeUpdate();
         } catch (HibernateException e) {
             throw new RuntimeException("Error creating users: " + e.getMessage());
